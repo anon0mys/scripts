@@ -1,0 +1,55 @@
+#!/bin/bash
+
+usage() {
+cat << EOF
+Usage: 
+  kexec POD_NAME -n NAMESPACE -- COMMAND
+    POD_NAME ...... A partial name of the pod to run this in
+    NAMESPACE ........ The kubernetes namespace where the pod is running
+    COMMAND .... The command to run in the pod
+EOF
+}
+
+
+POSITIONAL=()
+
+while [[ $# -gt 0 ]]
+do
+  key="$1"
+  case $key in
+      -n|--namespace)
+      namespace="$2"
+      shift # past argument
+      shift # past value
+      ;;
+      --)
+      shift
+      command="$@"
+      shift $#
+      ;;
+      -h|--help)    # unknown option
+      usage && exit 1;
+      ;;
+      *)    # unknown option
+      POSITIONAL+=("$1") # save it in an array for later
+      shift # past argument
+      ;;
+  esac
+done
+
+set -- "${POSITIONAL[@]}"
+pod_name=$1
+
+if [ -z "$namespace" ]; then
+  echo "Namespace is a required argument"
+  usage && exit 1;
+fi
+
+if [ -z "$command" ]; then
+  echo "Command is a required argument"
+  usage && exit 1;
+fi
+
+pod=$(kubectl get po -n $namespace | grep $pod_name | awk '{print $1; exit}')
+
+kubectl exec -it $pod -n $namespace -- $command

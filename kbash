@@ -1,0 +1,10 @@
+#!/bin/bash
+namespace=$2
+pod=$1
+if [ -z "$namespace" ]; then
+  namespace="default"
+fi
+
+pod=$(kubectl get po -n $namespace | grep $pod | awk '{print $1; exit}')
+
+kubectl exec -it $pod -n $namespace -- bash

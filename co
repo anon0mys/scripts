@@ -1,0 +1,20 @@
+#!/bin/bash
+
+operator=
+key=$1
+
+case $key in
+  -b)
+  operator=$key
+  branch_name=$2
+  ;;
+  -)
+  branch_name="$(git reflog | grep checkout | awk 'NR==1 {print $6}')"
+  ;;
+  *)
+  branch_name="$(git branch | grep $key)"
+  ;;
+esac
+
+git checkout $operator $branch_name
+
