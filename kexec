@@ -27,7 +27,7 @@ do
       command="$@"
       shift $#
       ;;
-      -h|--help)    # unknown option
+      -h|--help)
       usage && exit 1;
       ;;
       *)    # unknown option
@@ -41,8 +41,7 @@ set -- "${POSITIONAL[@]}"
 pod_name=$1
 
 if [ -z "$namespace" ]; then
-  echo "Namespace is a required argument"
-  usage && exit 1;
+  namespace='default'
 fi
 
 if [ -z "$command" ]; then

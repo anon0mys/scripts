@@ -3,8 +3,8 @@
 usage() {
 cat << EOF
 Usage: 
-  kbash POD_NAME -n NAMESPACE
-    POD_NAME ...... A partial name of the pod to run this in
+  klog POD_NAME -n NAMESPACE
+    POD_NAME ...... A partial name of the pod to get logs from
     NAMESPACE ........ The kubernetes namespace where the pod is running
 EOF
 }
@@ -38,6 +38,7 @@ if [ -z "$namespace" ]; then
   namespace='default'
 fi
 
+
 pod=$(kpo $pod_name -n $namespace)
 
-kubectl exec -it $pod -n $namespace -- bash
+kubectl logs $pod -n $namespace $@

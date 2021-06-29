@@ -1,5 +1,15 @@
 #!/bin/bash
 
+usage() {
+cat << EOF
+Usage: 
+  co [-b][-] [PARTIAL_BRANCH_NAME]
+    PARTIAL_BRANCH_NAME ...... A partial or full name of the branch
+    -b ..... Create a new branch
+    -  ..... Move to the most recent branch checked out
+EOF
+}
+
 operator=
 key=$1
 
