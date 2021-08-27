@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker ps | grep django | awk '{print $1}' | xargs docker inspect | awk '/Networks/{y=1;next}y' | grep -A1 -w Gateway | awk '{print $2}'
