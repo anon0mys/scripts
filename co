@@ -23,6 +23,11 @@ case $key in
   ;;
   *)
   branch_name="$(git branch | grep $key)"
+  echo $branch_name
+  if [ -z "$branch_name" ];
+  then
+    branch_name=$key
+  fi
   ;;
 esac
 

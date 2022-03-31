@@ -1,7 +1,13 @@
 ## Scripts
 
+Bash scripting cheat sheet: https://devhints.io/bash
+
 ### co
-git checkout shorthand
+```
+co [-L|[-P [-e]] [-@] [directory]
+```
+Check out a branch
+
 
 ### kbash
 start a bash shell on a pod

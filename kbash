@@ -40,4 +40,4 @@ fi
 
 pod=$(kpo $pod_name -n $namespace)
 
-kubectl exec -it $pod -n $namespace -- bash
+kubectl exec -it $pod -n $namespace $@ -- bash
